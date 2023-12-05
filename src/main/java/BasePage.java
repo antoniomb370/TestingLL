@@ -64,5 +64,4 @@ public class BasePage {
         return this.getText(nombreUsuario);
     }
 
-
 }

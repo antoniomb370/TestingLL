@@ -46,7 +46,7 @@ public class RegisterTest {
 
         try {
             registerPage.clickRegistrarse();
-            registerPage.fillRegistrationForm("John", "Doe", "123 Main St", "Anytown", "Anystate", "12345", "123-456-7890", "123-45-6789", "john" + randomNum, "password", "password");
+            registerPage.fillRegistrationForm("John", "Doe", "123 Main St", "Anytown", "Anystate", "12345", "123-456-7890", "123-45-6789", "johntesting2" + randomNum, "password", "password");
             registerPage.clickRegister();
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             String successMessage = registerPage.getSuccessMessage();

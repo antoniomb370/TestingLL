@@ -68,7 +68,4 @@ public class DataValidator extends BasePage {
          return this.getText(mensajePasswordNotMatch);
       }
 
-
-
-
 }

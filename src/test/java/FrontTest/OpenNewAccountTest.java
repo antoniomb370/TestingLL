@@ -13,11 +13,12 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LoginTest {
+public class OpenNewAccountTest {
     private WebDriver driver;
     private WebDriverWait wait;
-    static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/LoginTest.html");
+    static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/penNewAccountTest.html");
     static ExtentReports extent;
+    LoginPage loginPage = new LoginPage(driver, wait);
 
     @BeforeAll
     public static void crearReporte() {
@@ -29,29 +30,30 @@ public class LoginTest {
     public void setUp() {
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        LoginPage loginPage = new LoginPage(driver, wait);
-        loginPage.setUp();
-        loginPage.getUrl("https://parabank.parasoft.com/parabank/admin.htm");
+        OpenNewAccount openNewAccount = new OpenNewAccount(driver, wait);
+        openNewAccount.setUp();
+        openNewAccount.getUrl("https://parabank.parasoft.com/parabank/admin.htm");
+
     }
 
     @Test
     @Tag("Login")
     @Tag("ALL")
-    public void LoginExitosoTest() throws InterruptedException {
-        ExtentTest test = extent.createTest("Prueba de Login Exitoso");
+    public void testOpenNewAccount() throws InterruptedException {
+        ExtentTest test = extent.createTest("Prueba abrir nueva cuenta");
         test.log(Status.INFO, "Comienza el Test");
-        LoginPage loginPage = new LoginPage(driver, wait);
-
+        OpenNewAccount openNewAccount = new OpenNewAccount(driver, wait);
         try {
-
-            loginPage.fillLoginForm("johntesting2", "password");
-            loginPage.clickLogin();
+            loginPage.login("johntesting2", "password");
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            String messageAccountsTitulo = loginPage.obtenerMensajeVienvenida();
-            String messageAccountsFooter = loginPage.obtenerMensajeAccounts();
-            assertEquals("Accounts Overview", messageAccountsTitulo);
-            assertEquals("*Balance includes deposits that may be subject to holds", messageAccountsFooter);
-            test.log(Status.PASS, "Regreso a la página inicial");
+            openNewAccount.clickOpenNewAccount();
+            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            test.log(Status.INFO, "Click en abrir nueva cuenta");
+            openNewAccount.selectAccountType("SAVINGS");
+            openNewAccount.clickOpenNewAccountButton();
+            String messageNewAccount = openNewAccount.obtenerMensajeNewAccount();
+            assertEquals("Congratulations, your account is now open.", messageNewAccount);
+            test.pass("Seleccionado tipo de cuenta SAVINGS");
         } catch (AssertionError error) {
             test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
             throw error;
@@ -59,13 +61,12 @@ public class LoginTest {
     }
 
 
-
     @AfterEach
     public void cerrar() throws InterruptedException {
-  // quiero que dure 10 segundos antes de cerrar
-        Thread.sleep(10000);
-        LoginPage loginPage = new LoginPage(driver, wait);
-        loginPage.close();
+
+//       Thread.sleep(10000);
+        OpenNewAccount openNewAccount = new OpenNewAccount(driver, wait);
+        openNewAccount.close();
     }
 
     @AfterAll

@@ -3,15 +3,46 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends BasePage {
-        private By email = By.id("email");
-        private By contrasena = By.id("password");
-        private By sumitButtom = By
-                .xpath("//button[@class='btn btn-primario btn-sm' and @type='submit' and text()='Ingresar']");
-        private By mensajeError = By.className("form-feedback");
+    private By usermane = By.xpath("//input[@name='username']");
+    private By contrasena = By.xpath("//input[@name='password']");
+    private By sumitButtom = By.xpath("//input[@value='Log In']");
 
-        public LoginPage(WebDriver driver, WebDriverWait wait) {
-            super(driver, wait);
-        }
+    private By MensajeAccounts = By.xpath("//*[@id=\"rightPanel\"]/div/div/h1");
+    private By mensajeResumenCuenta = By.xpath("//table[@id='accountTable']//tfoot//tr");
+
+    public LoginPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
+    }
+
+
+    public void fillLoginForm(String mail, String clave) throws InterruptedException {
+        sendText(mail, usermane);
+        sendText(clave, contrasena);
+    }
+
+    public void clickLogin() throws InterruptedException {
+        click(sumitButtom);
+    }
+
+    public void login(String email, String pass) throws InterruptedException {
+        fillLoginForm(email, pass);
+        clickLogin();
+    }
+
+    public String obtenerMensajeVienvenida() throws InterruptedException {
+        return this.getText(MensajeAccounts);
+    }
+
+    public String obtenerMensajeAccounts() throws InterruptedException {
+        return this.getText(mensajeResumenCuenta);
+    }
+
+
+    //
+//        public String obtenerMensajeError() throws InterruptedException {
+//            System.out.println("MENSAJE DE ERROR: " + getText(mensajeError));
+//            return this.getText(mensajeError);
+//        }
 
 //        public void escribirMail(String mail) throws InterruptedException {
 //            sendText(mail, email);
@@ -21,12 +52,4 @@ public class LoginPage extends BasePage {
 //            sendText(clave, contrasena);
 //        }
 //
-//        public void clickIngresar() throws InterruptedException {
-//            click(sumitButtom);
-//        }
-//
-//        public String obtenerMensajeError() throws InterruptedException {
-//            System.out.println("MENSAJE DE ERROR: " + getText(mensajeError));
-//            return this.getText(mensajeError);
-//        }
 }
