@@ -7,7 +7,6 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,6 +18,7 @@ public class AccountsOverviewTest {
     static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/AccountsOverviewTest.html");
     static ExtentReports extent;
     LoginPage loginPage = new LoginPage(driver, wait);
+
     @BeforeAll
     public static void crearReporte() {
         extent = ExtentFactory.getInstance();
@@ -43,7 +43,7 @@ public class AccountsOverviewTest {
         test.log(Status.INFO, "Comienza el Test");
         AccountsOverview accountsOverview = new AccountsOverview(driver, wait);
         try {
-            loginPage.login("1", "1");
+            loginPage.login("1", "password");
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             accountsOverview.clickAccountsOverview();
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -57,7 +57,61 @@ public class AccountsOverviewTest {
         }
     }
 
+    @Test
+    @Tag("Login")
+    @Tag("ALL")
+    public void AccountActivityForAllMonth() throws InterruptedException {
+        ExtentTest test = extent.createTest("Prueba de Detalle de cuenta para todos los meses y todas las cuentas");
+        test.log(Status.INFO, "Comienza el Test");
+        AccountsOverview accountsOverview = new AccountsOverview(driver, wait);
+        try {
+            AccountsOverview();
+            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            accountsOverview.clickAccountsDetails();
+            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            test.log(Status.INFO, "Click en detalle de cuenta por mes");
+            String messageAccountsDetails = accountsOverview.obtenerMensajeAccountsDetails();
+            assertEquals("Account Details", messageAccountsDetails);
+            accountsOverview.selectActivityPeriod("All");
+            accountsOverview.selectTypeAccount("All");
+            // esppera 2 segundos
+            Thread.sleep(2000);
+            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            accountsOverview.clickGo();
+            test.pass("Se valida el detalle de cuenta por mes");
+        } catch (AssertionError error) {
+            test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
+            throw error;
+        }
+    }
 
+    @Test
+    @Tag("Login")
+    @Tag("ALL")
+    public void AccountActivityByOneMonth() throws InterruptedException {
+        ExtentTest test = extent.createTest("Prueba de Detalle de cuenta por mes y tipo de cuenta especifico");
+        test.log(Status.INFO, "Comienza el Test");
+        AccountsOverview accountsOverview = new AccountsOverview(driver, wait);
+        try {
+            AccountsOverview();
+            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            accountsOverview.clickAccountsDetails();
+            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            test.log(Status.INFO, "Click en detalle de cuenta por mes");
+            String messageAccountsDetails = accountsOverview.obtenerMensajeAccountsDetails();
+            assertEquals("Account Details", messageAccountsDetails);
+            accountsOverview.selectActivityPeriod("enero");
+            accountsOverview.selectTypeAccount("Credit");
+            // esppera 2 segundos
+            Thread.sleep(2000);
+            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            accountsOverview.clickGo();
+            test.pass("Se valida el detalle de cuenta por mes");
+        } catch (AssertionError error) {
+            test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
+            throw error;
+        }
+    }
     @AfterEach
     public void cerrar() throws InterruptedException {
 
