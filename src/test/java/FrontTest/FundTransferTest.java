@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FundTransferTest {
     private WebDriver driver;
     private WebDriverWait wait;
-    static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/openNewAccountTest.html");
+    static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/FundTransferTest.html");
     static ExtentReports extent;
     LoginPage loginPage = new LoginPage(driver, wait);
     @BeforeAll

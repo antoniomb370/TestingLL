@@ -16,7 +16,7 @@ public class AccountsOverviewTest {
 
     private WebDriver driver;
     private WebDriverWait wait;
-    static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/openNewAccountTest.html");
+    static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/AccountsOverviewTest.html");
     static ExtentReports extent;
     LoginPage loginPage = new LoginPage(driver, wait);
     @BeforeAll
@@ -61,7 +61,7 @@ public class AccountsOverviewTest {
     @AfterEach
     public void cerrar() throws InterruptedException {
 
-//       Thread.sleep(10000);
+
         OpenNewAccount openNewAccount = new OpenNewAccount(driver, wait);
         openNewAccount.close();
     }

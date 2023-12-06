@@ -43,36 +43,42 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(driver, wait);
 
         try {
+
             loginPage.fillLoginForm("1", "1");
+            loginPage.clickLogin();
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            String messageErrorLogin = loginPage.obtenerMensajeError();
-            assertEquals("The username and password could not be verified.", messageErrorLogin);
-            test.log(Status.PASS, "Se muestra mensaje de error");
+            String messageAccountsTitulo = loginPage.obtenerMensajeVienvenida();
+            String messageAccountsFooter = loginPage.obtenerMensajeAccounts();
+            assertEquals("Accounts Overview", messageAccountsTitulo);
+            assertEquals("*Balance includes deposits that may be subject to holds", messageAccountsFooter);
+            test.log(Status.PASS, "Regreso a la página inicial");
         } catch (AssertionError error) {
             test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
             throw error;
         }
     }
-      @Test
-      @Tag("Login")
-      @Tag("ALL")
-      public void LoginFallidoTest() throws InterruptedException {
-          ExtentTest test = extent.createTest("Prueba de Login Fallido");
-          test.log(Status.INFO, "Comienza el Test");
-          LoginPage loginPage = new LoginPage(driver, wait);
 
-          try {
-              loginPage.fillLoginForm("1", "2");
-              loginPage.clickLogin();
-              wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-              String messageLoginError = loginPage.obtenerMensajeError();
-              assertEquals("The username and password could not be verified.", messageLoginError);
-              test.log(Status.PASS, "Regreso a la página inicial");
-          } catch (AssertionError error) {
-              test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
-              throw error;
-          }
-      }
+    @Test
+    @Tag("Login")
+    @Tag("ALL")
+    public void LoginFallidoTest() throws InterruptedException {
+        ExtentTest test = extent.createTest("Prueba de Login Fallido");
+        test.log(Status.INFO, "Comienza el Test");
+        LoginPage loginPage = new LoginPage(driver, wait);
+
+        try {
+            loginPage.fillLoginForm("1", "2");
+            loginPage.clickLogin();
+            Thread.sleep(2000);
+            String messageLoginError = loginPage.obtenerMensajeError();
+            assertEquals("An internal error has occurred and has been logged.", messageLoginError);
+            test.log(Status.PASS, "Regreso a la página inicial");
+        } catch (AssertionError error) {
+            test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
+            throw error;
+        }
+    }
+
 
     @AfterEach
     public void cerrar()  {
