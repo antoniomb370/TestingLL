@@ -43,7 +43,7 @@ public class AccountsOverviewTest {
         test.log(Status.INFO, "Comienza el Test");
         AccountsOverview accountsOverview = new AccountsOverview(driver, wait);
         try {
-            loginPage.login("1", "password");
+            loginPage.login("1", "1");
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             accountsOverview.clickAccountsOverview();
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));

@@ -19,6 +19,7 @@ public class RegisterPage extends BasePage {
     private By password = By.id("customer.password");
     private By repeatedPassword = By.id("repeatedPassword");
     private By registerButton = By.xpath("//input[@value='Register']");
+
     private By registrarseBtn = By.xpath("//a[normalize-space()='Register']");
 
     private By successMessage = By.xpath("//*[@id=\"rightPanel\"]/p");

@@ -51,7 +51,7 @@ public class LoginTest {
             String messageAccountsFooter = loginPage.obtenerMensajeAccounts();
             assertEquals("Accounts Overview", messageAccountsTitulo);
             assertEquals("*Balance includes deposits that may be subject to holds", messageAccountsFooter);
-            test.log(Status.PASS, "Regreso a la página inicial");
+            test.log(Status.PASS, "Se realizó el login de forma exitosa");
         } catch (AssertionError error) {
             test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
             throw error;
@@ -71,8 +71,8 @@ public class LoginTest {
             loginPage.clickLogin();
             Thread.sleep(2000);
             String messageLoginError = loginPage.obtenerMensajeError();
-            assertEquals("An internal error has occurred and has been logged.", messageLoginError);
-            test.log(Status.PASS, "Regreso a la página inicial");
+            assertEquals("The username and password could not be verified.", messageLoginError);
+            test.log(Status.PASS, "Se realizo test de login fallido");
         } catch (AssertionError error) {
             test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
             throw error;

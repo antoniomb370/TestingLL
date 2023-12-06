@@ -42,8 +42,8 @@ public class FundTransferTest {
             test.log(Status.INFO, "Click en Transferencia de Fondos");
             Thread.sleep(3000);
             fundTransfer.enterAmount("100");
-            fundTransfer.selectFromAccount("15120");
-            fundTransfer.selectToAccount("15231");
+            fundTransfer.selectFromAccount("44424");
+            fundTransfer.selectToAccount("46422");
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             fundTransfer.clickTransfer();
             test.log(Status.INFO, "Click en Transferir");

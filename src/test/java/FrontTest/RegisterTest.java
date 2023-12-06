@@ -69,9 +69,9 @@ public class RegisterTest {
         RegisterPage registerPage = new RegisterPage(driver, wait);
 
         try {
-            String username = "1";
+            String username = "pepitobanana1";
             registerPage.clickRegistrarse();
-            registerPage.fillRegistrationForm("John", "Doe", "123 Main St", "Anytown", "Anystate", "12345", "123-456-7890", "123-45-6789", username, "password", "password");
+            registerPage.fillRegistrationForm("John", "Doe", "123 Main St", "Anytown", "Anystate", "12345", "123-456-7890", "123-45-6789", username, "banana1", "banana1");
             registerPage.clickRegister();
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             String errorMessage = registerPage.getErrorMessage();
