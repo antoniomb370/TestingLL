@@ -31,7 +31,7 @@ public class LoginTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.setUp();
-        loginPage.getUrl("https://parabank.parasoft.com/parabank/admin.htm");
+        loginPage.getUrl("https://parabank.parasoft.com/parabank/index.htm");
     }
 
     @Test
@@ -43,27 +43,39 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(driver, wait);
 
         try {
-
-            loginPage.fillLoginForm("johntesting2", "password");
-            loginPage.clickLogin();
+            loginPage.fillLoginForm("1", "1");
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            String messageAccountsTitulo = loginPage.obtenerMensajeVienvenida();
-            String messageAccountsFooter = loginPage.obtenerMensajeAccounts();
-            assertEquals("Accounts Overview", messageAccountsTitulo);
-            assertEquals("*Balance includes deposits that may be subject to holds", messageAccountsFooter);
-            test.log(Status.PASS, "Regreso a la página inicial");
+            String messageErrorLogin = loginPage.obtenerMensajeError();
+            assertEquals("The username and password could not be verified.", messageErrorLogin);
+            test.log(Status.PASS, "Se muestra mensaje de error");
         } catch (AssertionError error) {
             test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
             throw error;
         }
     }
+      @Test
+      @Tag("Login")
+      @Tag("ALL")
+      public void LoginFallidoTest() throws InterruptedException {
+          ExtentTest test = extent.createTest("Prueba de Login Fallido");
+          test.log(Status.INFO, "Comienza el Test");
+          LoginPage loginPage = new LoginPage(driver, wait);
 
-
+          try {
+              loginPage.fillLoginForm("1", "2");
+              loginPage.clickLogin();
+              wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+              String messageLoginError = loginPage.obtenerMensajeError();
+              assertEquals("The username and password could not be verified.", messageLoginError);
+              test.log(Status.PASS, "Regreso a la página inicial");
+          } catch (AssertionError error) {
+              test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
+              throw error;
+          }
+      }
 
     @AfterEach
-    public void cerrar() throws InterruptedException {
-  // quiero que dure 10 segundos antes de cerrar
-        Thread.sleep(10000);
+    public void cerrar()  {
         LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.close();
     }

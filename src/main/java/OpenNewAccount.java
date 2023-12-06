@@ -19,11 +19,9 @@ public class OpenNewAccount extends BasePage {
       public void clickOpenNewAccount() throws InterruptedException {
          click(newAccount);
       }
-
       public void clickOpenNewAccountButton() throws InterruptedException {
          click(openNewAccount);
       }
-
     public void selectAccountType(String option) {
         Select select = new Select(driver.findElement(accountType));
         select.selectByVisibleText(option);

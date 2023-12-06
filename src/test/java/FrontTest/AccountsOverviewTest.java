@@ -16,10 +16,9 @@ public class AccountsOverviewTest {
 
     private WebDriver driver;
     private WebDriverWait wait;
-    static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/penNewAccountTest.html");
+    static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/openNewAccountTest.html");
     static ExtentReports extent;
     LoginPage loginPage = new LoginPage(driver, wait);
-
     @BeforeAll
     public static void crearReporte() {
         extent = ExtentFactory.getInstance();
@@ -32,7 +31,7 @@ public class AccountsOverviewTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         AccountsOverview accountsOverview = new AccountsOverview(driver, wait);
         accountsOverview.setUp();
-        accountsOverview.getUrl("https://parabank.parasoft.com/parabank/admin.htm");
+        accountsOverview.getUrl("https://parabank.parasoft.com/parabank/index.htm");
 
     }
 
@@ -44,7 +43,7 @@ public class AccountsOverviewTest {
         test.log(Status.INFO, "Comienza el Test");
         AccountsOverview accountsOverview = new AccountsOverview(driver, wait);
         try {
-            loginPage.login("johntesting2", "password");
+            loginPage.login("1", "1");
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             accountsOverview.clickAccountsOverview();
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));

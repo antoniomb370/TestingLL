@@ -7,16 +7,13 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-public class OpenNewAccountTest {
+public class FundTransferTest {
     private WebDriver driver;
     private WebDriverWait wait;
-    static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/penNewAccountTest.html");
+    static ExtentSparkReporter info = new ExtentSparkReporter("target/REPORTES/openNewAccountTest.html");
     static ExtentReports extent;
     LoginPage loginPage = new LoginPage(driver, wait);
     @BeforeAll
@@ -28,44 +25,46 @@ public class OpenNewAccountTest {
     public void setUp() {
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        OpenNewAccount openNewAccount = new OpenNewAccount(driver, wait);
-        openNewAccount.setUp();
-        openNewAccount.getUrl("https://parabank.parasoft.com/parabank/index.htm");
-
+        FundTransfer fundTransfer = new FundTransfer(driver, wait);
+        fundTransfer.setUp();
+        fundTransfer.getUrl("https://parabank.parasoft.com/parabank/admin.htm");
     }
     @Test
     @Tag("Login")
     @Tag("ALL")
-    public void testOpenNewAccount() throws InterruptedException {
-        ExtentTest test = extent.createTest("Prueba abrir nueva cuenta");
+    public void FundTransfer() throws InterruptedException {
+        ExtentTest test = extent.createTest("Prueba de Transferencia de Fondos");
         test.log(Status.INFO, "Comienza el Test");
-        OpenNewAccount openNewAccount = new OpenNewAccount(driver, wait);
+        FundTransfer fundTransfer = new FundTransfer(driver, wait);
         try {
             loginPage.login("1", "1");
+            fundTransfer.clickFundTransfer();
+            test.log(Status.INFO, "Click en Transferencia de Fondos");
+            Thread.sleep(3000);
+            fundTransfer.enterAmount("100");
+            fundTransfer.selectFromAccount("15120");
+            fundTransfer.selectToAccount("15231");
             wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            openNewAccount.clickOpenNewAccount();
-            test.log(Status.INFO, "Click en abrir nueva cuenta");
-            openNewAccount.selectAccountType("SAVINGS");
-            Thread.sleep(2000);
-            openNewAccount.clickOpenNewAccountButton();
-            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            String messageNewAccount = openNewAccount.obtenerMensajeNewAccount();
-            assertEquals("Congratulations, your account is now open.", messageNewAccount);
-            test.pass("Seleccionado tipo de cuenta SAVINGS");
+            fundTransfer.clickTransfer();
+            test.log(Status.INFO, "Click en Transferir");
+            Thread.sleep(3000);
+            String messageFundTransfer = fundTransfer.obtenerMensajeFundTransfer();
+            assertEquals("Transfer Complete!", messageFundTransfer);
+            test.pass("Se realizó la transferencia de fondos");
         } catch (AssertionError error) {
             test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
             throw error;
         }
     }
-
     @AfterEach
     public void cerrar() {
-        OpenNewAccount openNewAccount = new OpenNewAccount(driver, wait);
-        openNewAccount.close();
+        FundTransfer fundTransfer = new FundTransfer(driver, wait);
+        fundTransfer.close();
     }
-
     @AfterAll
     public static void reporte() {
         extent.flush();
     }
+
+
 }

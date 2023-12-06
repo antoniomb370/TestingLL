@@ -6,9 +6,9 @@ public class LoginPage extends BasePage {
     private By usermane = By.xpath("//input[@name='username']");
     private By contrasena = By.xpath("//input[@name='password']");
     private By sumitButtom = By.xpath("//input[@value='Log In']");
-
     private By MensajeAccounts = By.xpath("//*[@id=\"rightPanel\"]/div/div/h1");
     private By mensajeResumenCuenta = By.xpath("//table[@id='accountTable']//tfoot//tr");
+    private By mensajeError = By.xpath("//*[@id=\"rightPanel\"]/p");
 
     public LoginPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
@@ -37,19 +37,10 @@ public class LoginPage extends BasePage {
         return this.getText(mensajeResumenCuenta);
     }
 
+      public String obtenerMensajeError() throws InterruptedException {
+         System.out.println("MENSAJE DE ERROR: " + getText(mensajeError));
+         return this.getText(mensajeError);
+      }
 
-    //
-//        public String obtenerMensajeError() throws InterruptedException {
-//            System.out.println("MENSAJE DE ERROR: " + getText(mensajeError));
-//            return this.getText(mensajeError);
-//        }
-
-//        public void escribirMail(String mail) throws InterruptedException {
-//            sendText(mail, email);
-//        }
-//
-//        public void escribirContrasena(String clave) throws InterruptedException {
-//            sendText(clave, contrasena);
-//        }
 //
 }

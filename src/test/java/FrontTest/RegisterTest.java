@@ -60,7 +60,6 @@ public class RegisterTest {
         }
     }
 
-
     @Test
     @Tag("Registro")
     @Tag("ALL")
@@ -70,7 +69,7 @@ public class RegisterTest {
         RegisterPage registerPage = new RegisterPage(driver, wait);
 
         try {
-            String username = "test2";
+            String username = "1";
             registerPage.clickRegistrarse();
             registerPage.fillRegistrationForm("John", "Doe", "123 Main St", "Anytown", "Anystate", "12345", "123-456-7890", "123-45-6789", username, "password", "password");
             registerPage.clickRegister();
@@ -113,7 +112,6 @@ public class RegisterTest {
             throw error;
         }
     }
-
 
     @Test
     @Tag("Registro")

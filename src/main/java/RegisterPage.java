@@ -31,26 +31,6 @@ public class RegisterPage extends BasePage {
     }
 
 
-    //mensaje de registro exitoso Your account was created successfully. You are now logged in.
-    //mensjae con el nombre del usuario Welcome test2
-
-    // <div id="rightPanel">
-    //
-    //
-    //
-    //<h1 class="title">Welcome test2</h1>
-    //
-    //<p>Your account was created successfully. You are now logged in.</p>
-    //				</div>
-
-    // selector //*[@id="rightPanel"]/h1 mensaje con el nombre del usuario
-
-    // //*[@id="rightPanel"]/p mensaje de registro exitoso
-
-    // SELECTOR MENSAJE NUEVA CUENTA  //*[@id="rightPanel"]/div/div/h1  MENSAJE NUEVA CUENTA <h1 class="title">Account Opened!</h1>
-    // <p>Congratulations, your account is now open.</p>  SELECTOR //*[@id="rightPanel"]/div/div/p[1]
-
-
     public void fillRegistrationForm(String firstName, String lastName, String address, String city, String state, String zipCode, String phoneNumber, String ssn, String username, String password, String repeatedPassword) throws InterruptedException {
         sendText(firstName, this.firstName);
         sendText(lastName, this.lastName);
@@ -90,91 +70,4 @@ public class RegisterPage extends BasePage {
         return this.getText(mensajeUsuarioExistente);
     }
 
-    public By getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(By firstName) {
-        this.firstName = firstName;
-    }
-
-    public By getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(By lastName) {
-        this.lastName = lastName;
-    }
-
-    public By getAddress() {
-        return address;
-    }
-
-    public void setAddress(By address) {
-        this.address = address;
-    }
-
-    public By getCity() {
-        return city;
-    }
-
-    public void setCity(By city) {
-        this.city = city;
-    }
-
-    public By getState() {
-        return state;
-    }
-
-    public void setState(By state) {
-        this.state = state;
-    }
-
-    public By getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(By zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public By getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(By phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public By getSsn() {
-        return ssn;
-    }
-
-    public void setSsn(By ssn) {
-        this.ssn = ssn;
-    }
-
-    public By getUsername() {
-        return username;
-    }
-
-    public void setUsername(By username) {
-        this.username = username;
-    }
-
-    public By getPassword() {
-        return password;
-    }
-
-    public void setPassword(By password) {
-        this.password = password;
-    }
-
-    public By getRepeatedPassword() {
-        return repeatedPassword;
-    }
-
-    public void setRepeatedPassword(By repeatedPassword) {
-        this.repeatedPassword = repeatedPassword;
-    }
 }
